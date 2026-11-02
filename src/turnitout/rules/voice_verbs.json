@@ -1,0 +1,168 @@
+{
+  "__prompt__": "Role: Transitive Academic Verbs for Active <-> Passive Conversion.",
+  "analyze": {
+    "past": "analyzed",
+    "passive": "was analyzed",
+    "passive_plural": "were analyzed"
+  },
+  "demonstrate": {
+    "past": "demonstrated",
+    "passive": "was demonstrated",
+    "passive_plural": "were demonstrated"
+  },
+  "investigate": {
+    "past": "investigated",
+    "passive": "was investigated",
+    "passive_plural": "were investigated"
+  },
+  "examine": {
+    "past": "examined",
+    "passive": "was examined",
+    "passive_plural": "were examined"
+  },
+  "evaluate": {
+    "past": "evaluated",
+    "passive": "was evaluated",
+    "passive_plural": "were evaluated"
+  },
+  "observe": {
+    "past": "observed",
+    "passive": "was observed",
+    "passive_plural": "were observed"
+  },
+  "derive": {
+    "past": "derived",
+    "passive": "was derived",
+    "passive_plural": "were derived"
+  },
+  "formulate": {
+    "past": "formulated",
+    "passive": "was formulated",
+    "passive_plural": "were formulated"
+  },
+  "compute": {
+    "past": "computed",
+    "passive": "was computed",
+    "passive_plural": "were computed"
+  },
+  "implement": {
+    "past": "implemented",
+    "passive": "was implemented",
+    "passive_plural": "were implemented"
+  },
+  "optimize": {
+    "past": "optimized",
+    "passive": "was optimized",
+    "passive_plural": "were optimized"
+  },
+  "validate": {
+    "past": "validated",
+    "passive": "was validated",
+    "passive_plural": "were validated"
+  },
+  "verify": {
+    "past": "verified",
+    "passive": "was verified",
+    "passive_plural": "were verified"
+  },
+  "characterize": {
+    "past": "characterized",
+    "passive": "was characterized",
+    "passive_plural": "were characterized"
+  },
+  "establish": {
+    "past": "established",
+    "passive": "was established",
+    "passive_plural": "were established"
+  },
+  "conduct": {
+    "past": "conducted",
+    "passive": "was conducted",
+    "passive_plural": "were conducted"
+  },
+  "develop": {
+    "past": "developed",
+    "passive": "was developed",
+    "passive_plural": "were developed"
+  },
+  "measure": {
+    "past": "measured",
+    "passive": "was measured",
+    "passive_plural": "were measured"
+  },
+  "calculate": {
+    "past": "calculated",
+    "passive": "was calculated",
+    "passive_plural": "were calculated"
+  },
+  "identify": {
+    "past": "identified",
+    "passive": "was identified",
+    "passive_plural": "were identified"
+  },
+  "apply": {
+    "past": "applied",
+    "passive": "was applied",
+    "passive_plural": "were applied"
+  },
+  "perform": {
+    "past": "performed",
+    "passive": "was performed",
+    "passive_plural": "were performed"
+  },
+  "determine": {
+    "past": "determined",
+    "passive": "was determined",
+    "passive_plural": "were determined"
+  },
+  "collect": {
+    "past": "collected",
+    "passive": "was collected",
+    "passive_plural": "were collected"
+  },
+  "process": {
+    "past": "processed",
+    "passive": "was processed",
+    "passive_plural": "were processed"
+  },
+  "simulate": {
+    "past": "simulated",
+    "passive": "was simulated",
+    "passive_plural": "were simulated"
+  },
+  "synthesize": {
+    "past": "synthesized",
+    "passive": "was synthesized",
+    "passive_plural": "were synthesized"
+  },
+  "engineer": {
+    "past": "engineered",
+    "passive": "was engineered",
+    "passive_plural": "were engineered"
+  },
+  "construct": {
+    "past": "constructed",
+    "passive": "was constructed",
+    "passive_plural": "were constructed"
+  },
+  "deploy": {
+    "past": "deployed",
+    "passive": "was deployed",
+    "passive_plural": "were deployed"
+  },
+  "train": {
+    "past": "trained",
+    "passive": "was trained",
+    "passive_plural": "were trained"
+  },
+  "test": {
+    "past": "tested",
+    "passive": "was tested",
+    "passive_plural": "were tested"
+  },
+  "scrutinize": {
+    "past": "scrutinized",
+    "passive": "was scrutinized",
+    "passive_plural": "were scrutinized"
+  }
+}

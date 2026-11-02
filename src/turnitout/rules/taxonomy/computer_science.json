@@ -1,0 +1,58 @@
+{
+  "discipline": "Computer Science & Artificial Intelligence",
+  "keywords": [
+    "neural network",
+    "deep learning",
+    "machine learning",
+    "transformer",
+    "latency",
+    "distributed",
+    "gpu",
+    "algorithm",
+    "dataset",
+    "accuracy",
+    "model",
+    "inference",
+    "parallel",
+    "attention"
+  ],
+  "venues": [
+    "NeurIPS",
+    "ICLR",
+    "ICML",
+    "IEEE TPAMI",
+    "ACM Computing Surveys",
+    "CVPR",
+    "ACL"
+  ],
+  "authors": [
+    [
+      "Vaswani",
+      "A."
+    ],
+    [
+      "Devlin",
+      "J."
+    ],
+    [
+      "He",
+      "K."
+    ],
+    [
+      "LeCun",
+      "Y."
+    ],
+    [
+      "Goodfellow",
+      "I."
+    ],
+    [
+      "Bengio",
+      "Y."
+    ],
+    [
+      "Hinton",
+      "G."
+    ]
+  ]
+}

@@ -1,0 +1,621 @@
+[
+  {
+    "__prompt__": "Role: Multi-Word Academic Paraphraser. Replace formulaic AI phrases and cliché n-grams with natural, high-entropy scholarly language."
+  },
+  [
+    "\\bIn conclusion,?\\b",
+    "To wrap up,"
+  ],
+  [
+    "\\bTo summarize,?\\b",
+    "In summary,"
+  ],
+  [
+    "\\bit is important to delve into\\b",
+    "we look closely at"
+  ],
+  [
+    "\\bdelve into\\b",
+    "explore"
+  ],
+  [
+    "\\bdelves into\\b",
+    "explores"
+  ],
+  [
+    "\\bdelving into\\b",
+    "exploring"
+  ],
+  [
+    "\\bdelved into\\b",
+    "explored"
+  ],
+  [
+    "\\bcomprehensive tapestry\\b",
+    "broad range"
+  ],
+  [
+    "\\brich tapestry\\b",
+    "intricate collection"
+  ],
+  [
+    "\\bplays a pivotal role in illustrating\\b",
+    "clearly shows"
+  ],
+  [
+    "\\bplays a pivotal role\\b",
+    "is essential"
+  ],
+  [
+    "\\bstands as a testament to\\b",
+    "reflects"
+  ],
+  [
+    "\\bserve as a testament to\\b",
+    "reflect"
+  ],
+  [
+    "\\bprovides a robust framework\\b",
+    "gives a solid basis"
+  ],
+  [
+    "\\bprovides a solid foundation\\b",
+    "establishes a dependable base"
+  ],
+  [
+    "\\bthe interplay between\\b",
+    "balancing"
+  ],
+  [
+    "\\bMoreover, in today's fast-paced digital era,?\\b",
+    "Today,"
+  ],
+  [
+    "\\bin today's fast-paced world,?\\b",
+    "in contemporary practice,"
+  ],
+  [
+    "\\bserves as a critical milestone\\b",
+    "is a major turning point"
+  ],
+  [
+    "\\bcannot be overlooked\\b",
+    "we must address"
+  ],
+  [
+    "\\bdelve deep into the multifaceted dimensions of\\b",
+    "examine the details of"
+  ],
+  [
+    "\\bthe multifaceted dimensions of\\b",
+    "the various aspects of"
+  ],
+  [
+    "\\bmultifaceted nature of\\b",
+    "complex aspects of"
+  ],
+  [
+    "\\bUltimately, this paradigm shift\\b",
+    "In the end, this shift"
+  ],
+  [
+    "\\ba paradigm shift\\b",
+    "a fundamental change"
+  ],
+  [
+    "\\bit is of paramount importance\\b",
+    "it is critical"
+  ],
+  [
+    "\\bof paramount importance\\b",
+    "essential"
+  ],
+  [
+    "\\bit is worth noting that\\b",
+    "it merits underscoring that"
+  ],
+  [
+    "\\bit should be noted that\\b",
+    "notably,"
+  ],
+  [
+    "\\bdue to the fact that\\b",
+    "because"
+  ],
+  [
+    "\\bin order to\\b",
+    "to"
+  ],
+  [
+    "\\bby means of\\b",
+    "through"
+  ],
+  [
+    "\\bwith respect to\\b",
+    "regarding"
+  ],
+  [
+    "\\bin light of the fact that\\b",
+    "since"
+  ],
+  [
+    "\\ba large number of\\b",
+    "numerous"
+  ],
+  [
+    "\\ba wide range of\\b",
+    "a broad spectrum of"
+  ],
+  [
+    "\\ba wide variety of\\b",
+    "diverse"
+  ],
+  [
+    "\\bas a matter of fact\\b",
+    "in reality"
+  ],
+  [
+    "\\bat the end of the day\\b",
+    "ultimately"
+  ],
+  [
+    "\\bfor the purpose of\\b",
+    "to"
+  ],
+  [
+    "\\bprevious studies have shown\\b",
+    "prior investigations have substantiated"
+  ],
+  [
+    "\\bprevious research has shown\\b",
+    "earlier scholarship demonstrated"
+  ],
+  [
+    "\\bhas been widely studied\\b",
+    "has been the subject of extensive inquiry"
+  ],
+  [
+    "\\bit has been reported that\\b",
+    "extant literature attests that"
+  ],
+  [
+    "\\baccording to recent research\\b",
+    "as corroborated by contemporary scholarship"
+  ],
+  [
+    "\\bis well documented\\b",
+    "has been amply chronicled in the literature"
+  ],
+  [
+    "\\bas mentioned earlier\\b",
+    "as alluded to in the preceding discussion"
+  ],
+  [
+    "\\bthe existing literature\\b",
+    "the prevailing body of scholarship"
+  ],
+  [
+    "\\ba growing body of literature\\b",
+    "an accumulating corpus of scholarship"
+  ],
+  [
+    "\\bwas carried out\\b",
+    "was undertaken"
+  ],
+  [
+    "\\bwas conducted\\b",
+    "was effectuated"
+  ],
+  [
+    "\\btakes into account\\b",
+    "gives due consideration to"
+  ],
+  [
+    "\\bis based on\\b",
+    "draws its foundations from"
+  ],
+  [
+    "\\bwas performed using\\b",
+    "was executed with"
+  ],
+  [
+    "\\bin accordance with\\b",
+    "consistent with"
+  ],
+  [
+    "\\bwith the exception of\\b",
+    "aside from"
+  ],
+  [
+    "\\bthe results indicate\\b",
+    "the findings bear witness to"
+  ],
+  [
+    "\\bthe experimental results show\\b",
+    "empirical observations demonstrate"
+  ],
+  [
+    "\\bit can be seen that\\b",
+    "it becomes manifest that"
+  ],
+  [
+    "\\bas shown in\\b",
+    "as rendered visible in"
+  ],
+  [
+    "\\bit was found that\\b",
+    "it was ascertained that"
+  ],
+  [
+    "\\ba significant increase\\b",
+    "an appreciable escalation"
+  ],
+  [
+    "\\ba significant decrease\\b",
+    "a notable reduction"
+  ],
+  [
+    "\\bis proportional to\\b",
+    "scales commensurately with"
+  ],
+  [
+    "\\bplays an important role\\b",
+    "occupies a significant function"
+  ],
+  [
+    "\\bis consistent with\\b",
+    "accords harmoniously with"
+  ],
+  [
+    "\\bin good agreement with\\b",
+    "in satisfactory concordance with"
+  ],
+  [
+    "\\bcan be attributed to\\b",
+    "may be imputed to"
+  ],
+  [
+    "\\bfurther research is needed\\b",
+    "subsequent investigation is warranted"
+  ],
+  [
+    "\\bfuture work should\\b",
+    "prospective endeavors ought to"
+  ],
+  [
+    "\\bto the best of our knowledge\\b",
+    "as far as we have ascertained"
+  ],
+  [
+    "\\bopens up new avenues\\b",
+    "unlocks promising opportunities"
+  ],
+  [
+    "\\bdelve deep into\\b",
+    "rigorously examine"
+  ],
+  [
+    "\\bin conclusion, it is important to\\b",
+    "to conclude, one must"
+  ],
+  [
+    "\\bin conclusion\\b",
+    "in summary"
+  ],
+  [
+    "\\bto wrap up\\b",
+    "in summary"
+  ],
+  [
+    "\\bcomprehensive tapestry of\\b",
+    "complex fabric of"
+  ],
+  [
+    "\\brich tapestry of\\b",
+    "diverse spectrum of"
+  ],
+  [
+    "\\btapestry of\\b",
+    "intricate mosaic of"
+  ],
+  [
+    "\\bplays a pivotal role in\\b",
+    "is central to"
+  ],
+  [
+    "\\bplays a crucial role in\\b",
+    "is instrumental in"
+  ],
+  [
+    "\\bplays a crucial role\\b",
+    "is of critical significance"
+  ],
+  [
+    "\\bplays a key role in\\b",
+    "acts as a primary driver of"
+  ],
+  [
+    "\\bserves as a testament to\\b",
+    "attests to"
+  ],
+  [
+    "\\ba testament to\\b",
+    "compelling evidence of"
+  ],
+  [
+    "\\bfurthermore, the interplay between\\b",
+    "moreover, the coordination of"
+  ],
+  [
+    "\\binterplay between\\b",
+    "interaction between"
+  ],
+  [
+    "\\brobust framework\\b",
+    "resilient architectural framework"
+  ],
+  [
+    "\\bmultifaceted dimensions of\\b",
+    "diverse aspects of"
+  ],
+  [
+    "\\bmultifaceted\\b",
+    "intricate"
+  ],
+  [
+    "\\bparadigm shift\\b",
+    "fundamental conceptual transition"
+  ],
+  [
+    "\\bcritical milestone\\b",
+    "significant inflection point"
+  ],
+  [
+    "\\bparamount importance\\b",
+    "vital significance"
+  ],
+  [
+    "\\bmoreover, in today's fast-paced digital era\\b",
+    "furthermore, in contemporary technological settings"
+  ],
+  [
+    "\\bin today's fast-paced digital era\\b",
+    "in contemporary digital environments"
+  ],
+  [
+    "\\bin today's digital era\\b",
+    "in modern technological contexts"
+  ],
+  [
+    "\\bin today's digital age\\b",
+    "in contemporary settings"
+  ],
+  [
+    "\\bin today's fast-paced world\\b",
+    "in dynamic contemporary environments"
+  ],
+  [
+    "\\bin today's world\\b",
+    "presently"
+  ],
+  [
+    "\\bfast-paced digital era\\b",
+    "rapidly evolving digital ecosystem"
+  ],
+  [
+    "\\bfast-paced world\\b",
+    "rapidly evolving environment"
+  ],
+  [
+    "\\bit cannot be denied that\\b",
+    "unquestionably,"
+  ],
+  [
+    "\\bit is important to note that\\b",
+    "observe that"
+  ],
+  [
+    "\\bit is essential to remember that\\b",
+    "one must bear in mind that"
+  ],
+  [
+    "\\bit is interesting to observe that\\b",
+    "remarkably,"
+  ],
+  [
+    "\\bon account of the fact that\\b",
+    "inasmuch as"
+  ],
+  [
+    "\\bwith a view to\\b",
+    "in an effort to"
+  ],
+  [
+    "\\bwith the aim of\\b",
+    "aiming to"
+  ],
+  [
+    "\\ba significant amount of\\b",
+    "a substantial volume of"
+  ],
+  [
+    "\\bearlier research suggests\\b",
+    "prior literature indicates"
+  ],
+  [
+    "\\bas depicted in\\b",
+    "as illustrated in"
+  ],
+  [
+    "\\bthe data shows that\\b",
+    "the records corroborate that"
+  ],
+  [
+    "\\bit is evident that\\b",
+    "it becomes manifest that"
+  ],
+  [
+    "\\bat the forefront of\\b",
+    "leading the vanguard in"
+  ],
+  [
+    "\\bbeacon of hope\\b",
+    "promising catalyst"
+  ],
+  [
+    "\\bnavigating the complexities of\\b",
+    "negotiating the intricacies of"
+  ],
+  [
+    "\\bnavigating the landscape of\\b",
+    "surveying the domain of"
+  ],
+  [
+    "\\bever-evolving landscape of\\b",
+    "dynamic operational terrain of"
+  ],
+  [
+    "\\bever-changing landscape\\b",
+    "shifting milieu"
+  ],
+  [
+    "\\btake into consideration\\b",
+    "give due consideration to"
+  ],
+  [
+    "\\btakes into consideration\\b",
+    "gives due consideration to"
+  ],
+  [
+    "\\btaken into consideration\\b",
+    "given due consideration"
+  ],
+  [
+    "\\btaking into consideration\\b",
+    "giving due consideration to"
+  ],
+  [
+    "\\btake into account\\b",
+    "account for"
+  ],
+  [
+    "\\bin the realm of\\b",
+    "within the scope of"
+  ],
+  [
+    "\\bin the domain of\\b",
+    "in the discipline of"
+  ],
+  [
+    "\\ba plethora of\\b",
+    "a profusion of"
+  ],
+  [
+    "\\bserves to highlight\\b",
+    "accentuates"
+  ],
+  [
+    "\\bserves as a\\b",
+    "functions as a"
+  ],
+  [
+    "\\bshed light on\\b",
+    "illuminate"
+  ],
+  [
+    "\\bsheds light on\\b",
+    "illuminates"
+  ],
+  [
+    "\\bis characterized by\\b",
+    "is distinguished by"
+  ],
+  [
+    "\\bon the other hand\\b",
+    "conversely"
+  ],
+  [
+    "\\bin terms of\\b",
+    "with regard to"
+  ],
+  [
+    "\\bplays an indispensable part\\b",
+    "occupies a foundational role"
+  ],
+  [
+    "\\bit goes without saying that\\b",
+    "self-evidently,"
+  ],
+  [
+    "\\ba cornerstone of\\b",
+    "a foundational tenet of"
+  ],
+  [
+    "\\bin summary,\\b",
+    "in essence,"
+  ],
+  [
+    "\\bto sum up,\\b",
+    "to encapsulate,"
+  ],
+  [
+    "\\bin the near future\\b",
+    "prospectively"
+  ],
+  [
+    "\\bhas a profound impact on\\b",
+    "substantially alters"
+  ],
+  [
+    "\\bhas a significant effect on\\b",
+    "markedly influences"
+  ],
+  [
+    "\\ba double-edged sword\\b",
+    "a bifurcated challenge"
+  ],
+  [
+    "\\bit remains to be seen whether\\b",
+    "it is yet uncertain if"
+  ],
+  [
+    "\\bgives rise to\\b",
+    "engenders"
+  ],
+  [
+    "\\bis in good agreement with\\b",
+    "accords closely with"
+  ],
+  [
+    "\\bdraws attention to\\b",
+    "foregrounds"
+  ],
+  [
+    "\\bin this day and age\\b",
+    "contemporarily"
+  ],
+  [
+    "\\ball things considered\\b",
+    "upon comprehensive evaluation"
+  ],
+  [
+    "\\bat first glance\\b",
+    "prima facie"
+  ],
+  [
+    "\\bby leaps and bounds\\b",
+    "exponentially"
+  ],
+  [
+    "\\blies at the heart of\\b",
+    "constitutes the crux of"
+  ],
+  [
+    "\\bpaves the way for\\b",
+    "facilitates the emergence of"
+  ],
+  [
+    "\\bsets the stage for\\b",
+    "preconditions the groundwork for"
+  ]
+]

@@ -1,0 +1,50 @@
+{
+  "discipline": "Engineering & Physics",
+  "keywords": [
+    "finite element",
+    "fluid dynamics",
+    "navier-stokes",
+    "thermodynamics",
+    "boundary condition",
+    "heat transfer",
+    "quantum",
+    "stress",
+    "strain",
+    "mechanics",
+    "turbulence",
+    "oscillation"
+  ],
+  "venues": [
+    "Physical Review Letters",
+    "Journal of Fluid Mechanics",
+    "Applied Physics Letters",
+    "IEEE Transactions on Electron Devices",
+    "Nature Physics"
+  ],
+  "authors": [
+    [
+      "Navier",
+      "C."
+    ],
+    [
+      "Stokes",
+      "G. G."
+    ],
+    [
+      "Reynolds",
+      "O."
+    ],
+    [
+      "Prandtl",
+      "L."
+    ],
+    [
+      "Taylor",
+      "G. I."
+    ],
+    [
+      "Landau",
+      "L. D."
+    ]
+  ]
+}

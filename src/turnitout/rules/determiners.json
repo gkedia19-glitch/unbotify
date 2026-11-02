@@ -1,0 +1,125 @@
+{
+  "__prompt__": "Role: Determiner & Demonstrative Swapper. Disrupts repetitive 'The [noun]' sentence structures.",
+  "the": [
+    "this",
+    "such",
+    "the given",
+    "said",
+    "the respective",
+    "that"
+  ],
+  "this": [
+    "the",
+    "the present",
+    "such a",
+    "this particular",
+    "said",
+    "such"
+  ],
+  "these": [
+    "such",
+    "the observed",
+    "the aforementioned",
+    "these specific",
+    "the prevailing",
+    "the noted"
+  ],
+  "several": [
+    "numerous",
+    "a number of",
+    "multiple",
+    "sundry",
+    "a plurality of"
+  ],
+  "many": [
+    "numerous",
+    "a considerable number of",
+    "myriad",
+    "copious",
+    "diverse"
+  ],
+  "some": [
+    "certain",
+    "particular",
+    "select",
+    "sundry",
+    "a subset of"
+  ],
+  "few": [
+    "a limited number of",
+    "a scant handful of",
+    "sparse"
+  ],
+  "most": [
+    "the majority of",
+    "the preponderance of",
+    "the greater part of",
+    "the bulk of"
+  ],
+  "all": [
+    "every",
+    "each and every",
+    "the entirety of",
+    "the totality of",
+    "each of the"
+  ],
+  "each": [
+    "every",
+    "any given",
+    "every individual",
+    "each respective"
+  ],
+  "every": [
+    "each",
+    "any given",
+    "all",
+    "every single",
+    "all individual"
+  ],
+  "both": [
+    "the two",
+    "each of the two",
+    "the pair of",
+    "simultaneously the"
+  ],
+  "any": [
+    "whichever",
+    "any given",
+    "an arbitrary"
+  ],
+  "another": [
+    "an additional",
+    "a further",
+    "one more",
+    "a supplementary"
+  ],
+  "such": [
+    "said",
+    "the aforementioned",
+    "the given",
+    "the specified"
+  ],
+  "other": [
+    "alternative",
+    "additional",
+    "further",
+    "supplementary",
+    "distinct"
+  ],
+  "those": [
+    "such",
+    "the observed",
+    "the specific"
+  ],
+  "a": [
+    "an individual",
+    "a given",
+    "a singular",
+    "a particular"
+  ],
+  "an": [
+    "a single",
+    "a particular",
+    "a given"
+  ]
+}

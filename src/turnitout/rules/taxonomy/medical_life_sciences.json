@@ -1,0 +1,48 @@
+{
+  "discipline": "Medical & Life Sciences",
+  "keywords": [
+    "genomic",
+    "protein",
+    "crispr",
+    "expression",
+    "clinical",
+    "assay",
+    "in vitro",
+    "in vivo",
+    "pathway",
+    "biomarker",
+    "cellular",
+    "therapeutic",
+    "antibody"
+  ],
+  "venues": [
+    "The Lancet",
+    "New England Journal of Medicine",
+    "Nature Medicine",
+    "Cell",
+    "Nature Genetics",
+    "Journal of Clinical Oncology"
+  ],
+  "authors": [
+    [
+      "Doudna",
+      "J. A."
+    ],
+    [
+      "Charpentier",
+      "E."
+    ],
+    [
+      "Lander",
+      "E. S."
+    ],
+    [
+      "Collins",
+      "F. S."
+    ],
+    [
+      "Venter",
+      "J. C."
+    ]
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "discipline": "Quantitative Finance & Economics",
+  "keywords": [
+    "option pricing",
+    "black-scholes",
+    "volatility",
+    "arbitrage",
+    "portfolio",
+    "asset",
+    "liquidity",
+    "hedging",
+    "risk-neutral",
+    "derivative",
+    "interest rate",
+    "stochastic volatility"
+  ],
+  "venues": [
+    "Journal of Finance",
+    "Mathematical Finance",
+    "Journal of Financial Economics",
+    "Quantitative Finance",
+    "Review of Financial Studies"
+  ],
+  "authors": [
+    [
+      "Black",
+      "F."
+    ],
+    [
+      "Scholes",
+      "M."
+    ],
+    [
+      "Merton",
+      "R. C."
+    ],
+    [
+      "Heston",
+      "S. L."
+    ],
+    [
+      "Fama",
+      "E. F."
+    ]
+  ]
+}

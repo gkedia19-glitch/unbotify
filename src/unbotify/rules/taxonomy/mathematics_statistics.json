@@ -1,0 +1,46 @@
+{
+  "discipline": "Mathematics & Statistics",
+  "keywords": [
+    "convergence",
+    "eigenvalue",
+    "differential equation",
+    "stochastic",
+    "martingale",
+    "markov",
+    "probability",
+    "matrix",
+    "theorem",
+    "lemma",
+    "topological",
+    "manifold"
+  ],
+  "venues": [
+    "Annals of Mathematics",
+    "Journal of the American Mathematical Society",
+    "Biometrika",
+    "The Annals of Statistics",
+    "SIAM Journal on Numerical Analysis"
+  ],
+  "authors": [
+    [
+      "Cauchy",
+      "A. L."
+    ],
+    [
+      "Riemann",
+      "B."
+    ],
+    [
+      "Hilbert",
+      "D."
+    ],
+    [
+      "Kolmogorov",
+      "A. N."
+    ],
+    [
+      "Sobolev",
+      "S. L."
+    ]
+  ]
+}
