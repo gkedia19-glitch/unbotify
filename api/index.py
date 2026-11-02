@@ -18,3 +18,4 @@ if SRC_DIR not in sys.path:
 from api import app
 
 # Vercel looks for 'app' in api/index.py
+

@@ -360,10 +360,10 @@
 
     <div class="badges-row">
       <span class="badge accent">✨ Less formula. More expression.</span>
-      <span class="badge">🔒 100% In-Browser Privacy</span>
+      <span class="badge">🔒 100% Zero Generative AI</span>
       <span class="badge">⚡ Sub-50ms Deterministic Execution</span>
-      <span class="badge">📄 DOCX, LaTeX, Code & Text</span>
-      <span class="badge" id="engineStatusBadge" style="background:rgba(16,185,129,0.15); border-color:rgba(16,185,129,0.3); color:#34D399;">⚡ Engine: Initializing WebAssembly...</span>
+      <span class="badge">📄 DOCX & LaTeX Math Preservation</span>
+      <span class="badge">🌐 Vercel Serverless Ready</span>
     </div>
 
     <!-- Navigation Tabs -->
@@ -542,178 +542,16 @@
     </footer>
   </div>
 
-  <!-- Pyodide Python 3.12 WebAssembly Core & JSZip for In-Browser DOCX Processing -->
-  <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
   <script>
     const SAMPLE_BENCHMARK = "In conclusion, it is important to delve into the comprehensive tapestry of modern neural networks. This study plays a pivotal role in illustrating that artificial intelligence stands as a testament to human innovation. Furthermore, the interplay between stochastic optimization and computational scalability provides a robust framework for subsequent empirical inquiries. In order to delve into the multifaceted dimensions of this phenomenon, previous studies have shown that distributed clusters achieve significant acceleration.";
 
     document.getElementById("inputText").value = SAMPLE_BENCHMARK;
 
-    let pyodide = null;
-    let pyodideReady = false;
-
-    // Built-in instant rule tables for 0ms sub-millisecond response & offline mobile support
-    const PHRASE_RULES = [
-      [/\bin conclusion\b/gi, "ultimately"],
-      [/\bit is important to\b/gi, "one should"],
-      [/\bdelve into\b/gi, "examine"],
-      [/\bcomprehensive tapestry\b/gi, "diverse landscape"],
-      [/\bplays a pivotal role in\b/gi, "is critical to"],
-      [/\bstands as a testament to\b/gi, "reflects"],
-      [/\bfurthermore\b/gi, "coupled with this"],
-      [/\bmoreover\b/gi, "what is more"],
-      [/\bin order to\b/gi, "to"],
-      [/\bmultifaceted dimensions\b/gi, "various angles"],
-      [/\bprevious studies have shown\b/gi, "prior research indicates"],
-      [/\bsignificant acceleration\b/gi, "pronounced speedups"],
-      [/\butilize\b/gi, "use"],
-      [/\bdemonstrate\b/gi, "show"],
-      [/\bconsequently\b/gi, "as a result"]
-    ];
-
-    const SYNONYM_MAP = {
-      "crucial": ["vital", "pivotal", "key", "essential"],
-      "shows": ["reveals", "illustrates", "indicates"],
-      "important": ["notable", "meaningful", "significant"],
-      "models": ["architectures", "schemas", "systems"],
-      "framework": ["paradigm", "structure", "setup"],
-      "produce": ["yield", "generate", "create"]
-    };
-
-    function instantHumanizeFallback(text, intensity) {
-      let res = text;
-      let count = 0;
-      for (const [pattern, rep] of PHRASE_RULES) {
-        if (pattern.test(res)) {
-          res = res.replace(pattern, rep);
-          count++;
-        }
-      }
-      const words = res.split(/\b/);
-      for (let i = 0; i < words.length; i++) {
-        const lower = words[i].toLowerCase();
-        if (SYNONYM_MAP[lower] && Math.random() < (intensity / 100.0)) {
-          const list = SYNONYM_MAP[lower];
-          words[i] = list[Math.floor(Math.random() * list.length)];
-          count++;
-        }
-      }
-      return {
-        humanized_text: words.join(""),
-        modifications_count: count,
-        words_processed: text.split(/\s+/).filter(Boolean).length,
-        telemetry: { synonym_swaps: count },
-        latency_ms: 12.0,
-        risk_score: 0.0,
-        entropy_score: 1.42,
-        classification: "Safe (100% Human-Authored • AI Neutralized)"
-      };
-    }
-
-    // Initialize Pyodide WebAssembly Python Environment
-    async function initPyodideEngine() {
-      const badge = document.getElementById("engineStatusBadge");
-      try {
-        if (badge) badge.innerText = "⚡ Loading WebAssembly Core...";
-        pyodide = await loadPyodide({
-          indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/"
-        });
-
-        // Fetch official unbotify.zip package
-        const res = await fetch("/unbotify.zip");
-        if (res.ok) {
-          const zipBytes = await res.arrayBuffer();
-          pyodide.FS.writeFile("/unbotify.zip", new Uint8Array(zipBytes));
-
-          await pyodide.runPythonAsync(`
-import sys
-import zipfile
-import json
-import time
-
-with zipfile.ZipFile('/unbotify.zip', 'r') as z:
-    z.extractall('/home/pyodide/src')
-sys.path.insert(0, '/home/pyodide/src')
-
-from unbotify.config import UnbotifyConfig
-from unbotify.core.modifier import TextModifier
-from unbotify.core.ai_detector import ZipPyDetector
-from unbotify.core.citation_engine import CitationEngine
-from unbotify.core.parsers.code_parser import CodeCommentParser
-
-detector = ZipPyDetector()
-citation_engine = CitationEngine()
-code_parser = CodeCommentParser()
-
-def py_humanize(text, intensity, style, zero_exp):
-    start = time.time()
-    cfg = UnbotifyConfig(
-        INTENSITY=float(intensity),
-        STYLE=str(style),
-        ZERO_EXPANSION=bool(zero_exp)
-    )
-    mod = TextModifier(cfg)
-    humanized = mod.modify_text(text)
-    telemetry = mod.get_telemetry()
-    det = detector.analyze(humanized)
-    words = len(text.split())
-    latency = (time.time() - start) * 1000.0
-    return json.dumps({
-        "success": True,
-        "humanized_text": humanized,
-        "words_processed": words,
-        "modifications_count": telemetry.get("total_modifications", 0),
-        "telemetry": telemetry,
-        "latency_ms": latency,
-        "risk_score": det.get("risk_score", 0.0),
-        "entropy_score": det.get("entropy_score", 0.0),
-        "classification": det.get("classification", "Safe")
-    })
-
-def py_detect(text):
-    return json.dumps(detector.analyze(text))
-
-def py_cite(text, count):
-    res_text, bib, c_count = citation_engine.insert_citations(text, citation_count=count)
-    return json.dumps({"cited_text": res_text, "bib_text": bib, "citation_count": c_count})
-
-def py_code(code, lang, persona):
-    res = code_parser.process_code(code, lang=lang, persona=persona)
-    return json.dumps({"processed_code": res})
-`);
-          pyodideReady = true;
-          if (badge) {
-            badge.style.background = "rgba(16,185,129,0.2)";
-            badge.style.borderColor = "rgba(16,185,129,0.4)";
-            badge.style.color = "#34D399";
-            badge.innerText = "✓ WebAssembly Core Active (Python 3.12 • Zero Latency)";
-          }
-        }
-      } catch (err) {
-        console.warn("Pyodide WebAssembly initialization notice:", err);
-        if (badge) {
-          badge.style.background = "rgba(99,102,241,0.2)";
-          badge.style.borderColor = "rgba(99,102,241,0.4)";
-          badge.style.color = "#818CF8";
-          badge.innerText = "✓ Client Transformer Active (Zero Server Latency)";
-        }
-      }
-    }
-
-    // Trigger Pyodide load on page load
-    window.addEventListener("DOMContentLoaded", () => {
-      initPyodideEngine();
-    });
-
     function switchTab(tabId) {
       document.querySelectorAll(".tab-content").forEach(el => el.style.display = "none");
       document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
       document.getElementById("tab-" + tabId).style.display = "block";
-      if (window.event && window.event.target) {
-        window.event.target.classList.add("active");
-      }
+      event.target.classList.add("active");
     }
 
     function updateIntensity(val) {
@@ -732,87 +570,69 @@ def py_code(code, lang, persona):
       btn.innerText = "Transforming Expression...";
       btn.disabled = true;
 
-      const intensity = parseFloat(document.getElementById("intensitySlider").value);
-      const style = document.getElementById("styleSelect").value;
-      const zeroExp = document.getElementById("zeroExp").checked;
+      const payload = {
+        text: text,
+        intensity: parseFloat(document.getElementById("intensitySlider").value),
+        style: document.getElementById("styleSelect").value,
+        zero_expansion: document.getElementById("zeroExp").checked
+      };
 
       try {
-        let data = null;
+        const res = await fetch("/v1/humanize", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
 
-        // 1. Try Pyodide WebAssembly Core if ready
-        if (pyodideReady && pyodide) {
-          try {
-            const raw = pyodide.globals.get('py_humanize')(text, intensity, style, zeroExp);
-            data = JSON.parse(raw);
-          } catch (pyErr) {
-            console.error("Pyodide run error, falling back:", pyErr);
-          }
-        }
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById("outputText").value = data.humanized_text;
+          document.getElementById("mWords").innerText = data.words_processed;
+          document.getElementById("mTransforms").innerText = data.modifications_count;
+          document.getElementById("mSyns").innerText = data.telemetry.synonym_swaps || 0;
+          document.getElementById("mLatency").innerText = Math.round(data.latency_ms) + "ms";
 
-        // 2. Try REST API if local server is active
-        if (!data) {
-          try {
-            const res = await fetch("/v1/humanize", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ text, intensity, style, zero_expansion: zeroExp })
-            });
-            if (res.ok) data = await res.json();
-          } catch (netErr) {}
-        }
+          // Render diff
+          renderDiff(text, data.humanized_text);
 
-        // 3. Fallback to instant client rule engine
-        if (!data) {
-          data = instantHumanizeFallback(text, intensity);
-        }
-
-        if (data && (data.success || data.humanized_text)) {
-          const out = data.humanized_text;
-          document.getElementById("outputText").value = out;
-          document.getElementById("mWords").innerText = data.words_processed || text.split(/\s+/).length;
-          document.getElementById("mTransforms").innerText = data.modifications_count || 14;
-          document.getElementById("mSyns").innerText = (data.telemetry && data.telemetry.synonym_swaps) || 6;
-          document.getElementById("mLatency").innerText = Math.round(data.latency_ms || 18) + "ms";
-
-          renderDiff(text, out);
-          runOutputAudit(out, data.risk_score, data.entropy_score);
+          // Run AI Detection on output
+          runOutputAudit(data.humanized_text);
         }
       } catch (err) {
-        alert("Transformation error: " + err.message);
+        alert("Error connecting to Unbotify API: " + err.message);
       } finally {
         btn.innerText = "🚀 Unbotify Text Now";
         btn.disabled = false;
       }
     }
 
-    async function runOutputAudit(transformed, preScore, preEntropy) {
-      let score = (typeof preScore === 'number') ? preScore : 0.0;
-      let entropy = preEntropy || 1.4205;
-
-      if (pyodideReady && pyodide && preScore === undefined) {
-        try {
-          const raw = pyodide.globals.get('py_detect')(transformed);
-          const det = JSON.parse(raw);
-          score = det.risk_score;
-          entropy = det.entropy_score;
-        } catch (e) {}
-      }
-
-      document.getElementById("riskScore").innerText = score.toFixed(1) + "% AI";
-      document.getElementById("mEntropy").innerText = typeof entropy === 'number' ? entropy.toFixed(4) : entropy;
-      const banner = document.getElementById("riskBanner");
-      if (score === 0.0) {
-        banner.style.borderColor = "var(--success)";
-        document.getElementById("riskScore").style.color = "var(--success)";
-        document.getElementById("riskLabel").innerText = "— Safe (100% Human-Authored • AI Neutralized)";
-      } else if (score <= 35.0) {
-        banner.style.borderColor = "var(--warning)";
-        document.getElementById("riskScore").style.color = "var(--warning)";
-        document.getElementById("riskLabel").innerText = "— Moderate Natural Variance";
-      } else {
-        banner.style.borderColor = "var(--danger)";
-        document.getElementById("riskScore").style.color = "var(--danger)";
-        document.getElementById("riskLabel").innerText = "— AI Tells Detected";
+    async function runOutputAudit(transformed) {
+      try {
+        const res = await fetch("/v1/detect-ai", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: transformed })
+        });
+        const data = await res.json();
+        const score = data.risk_score;
+        document.getElementById("riskScore").innerText = score + "% AI";
+        document.getElementById("mEntropy").innerText = data.entropy_score;
+        const banner = document.getElementById("riskBanner");
+        if (score === 0.0) {
+          banner.style.borderColor = "var(--success)";
+          document.getElementById("riskScore").style.color = "var(--success)";
+          document.getElementById("riskLabel").innerText = "— Safe (100% Human-Authored • AI Neutralized)";
+        } else if (score <= 35.0) {
+          banner.style.borderColor = "var(--warning)";
+          document.getElementById("riskScore").style.color = "var(--warning)";
+          document.getElementById("riskLabel").innerText = "— Moderate Natural Variance";
+        } else {
+          banner.style.borderColor = "var(--danger)";
+          document.getElementById("riskScore").style.color = "var(--danger)";
+          document.getElementById("riskLabel").innerText = "— AI Tells Detected";
+        }
+      } catch (e) {
+        console.error(e);
       }
     }
 
@@ -848,83 +668,34 @@ def py_code(code, lang, persona):
       if (!fileInput.files.length) return alert("Select a document file first.");
 
       const file = fileInput.files[0];
-      const intensity = parseFloat(document.getElementById("intensitySlider").value);
-      const style = document.getElementById("styleSelect").value;
-      const zeroExp = document.getElementById("zeroExp").checked;
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("intensity", document.getElementById("intensitySlider").value);
+      formData.append("style", document.getElementById("styleSelect").value);
+      formData.append("zero_expansion", document.getElementById("zeroExp").checked);
 
       const statusDiv = document.getElementById("fileStatus");
       statusDiv.innerHTML = '<span style="color:#818CF8;">Processing document with Unbotify engine...</span>';
 
       try {
-        const lowerName = file.name.toLowerCase();
+        const res = await fetch("/v1/process-file", {
+          method: "POST",
+          body: formData
+        });
+        if (!res.ok) throw new Error("Server returned " + res.status);
 
-        // 1. Handle .docx files directly in browser using JSZip
-        if (lowerName.endsWith(".docx")) {
-          const arrayBuffer = await file.arrayBuffer();
-          const zip = await JSZip.loadAsync(arrayBuffer);
-          const docXmlFile = zip.file("word/document.xml");
-          if (!docXmlFile) throw new Error("Invalid .docx file: word/document.xml not found.");
-
-          let xmlText = await docXmlFile.async("string");
-
-          // Extract and humanize <w:t> tags
-          xmlText = xmlText.replace(/<w:t([^>]*)>([\s\S]*?)<\/w:t>/g, (match, attrs, content) => {
-            if (!content.trim()) return match;
-            let humanizedContent = content;
-            if (pyodideReady && pyodide) {
-              try {
-                const raw = pyodide.globals.get('py_humanize')(content, intensity, style, zeroExp);
-                const pData = JSON.parse(raw);
-                if (pData.humanized_text) humanizedContent = pData.humanized_text;
-              } catch (e) {
-                humanizedContent = instantHumanizeFallback(content, intensity).humanized_text;
-              }
-            } else {
-              humanizedContent = instantHumanizeFallback(content, intensity).humanized_text;
-            }
-            return `<w:t${attrs}>${humanizedContent}</w:t>`;
-          });
-
-          zip.file("word/document.xml", xmlText);
-          const outBlob = await zip.generateAsync({ type: "blob" });
-          triggerDownload(outBlob, "Unbotify_Processed_" + file.name);
-          statusDiv.innerHTML = '<span style="color:var(--success); font-weight:700;">✓ DOCX processed and downloaded successfully!</span>';
-          return;
-        }
-
-        // 2. Handle Text, Markdown, LaTeX, and Code files
-        const textContent = await file.text();
-        let transformedText = textContent;
-
-        if (pyodideReady && pyodide) {
-          try {
-            const raw = pyodide.globals.get('py_humanize')(textContent, intensity, style, zeroExp);
-            const pData = JSON.parse(raw);
-            if (pData.humanized_text) transformedText = pData.humanized_text;
-          } catch (e) {
-            transformedText = instantHumanizeFallback(textContent, intensity).humanized_text;
-          }
-        } else {
-          transformedText = instantHumanizeFallback(textContent, intensity).humanized_text;
-        }
-
-        const outBlob = new Blob([transformedText], { type: "text/plain;charset=utf-8" });
-        triggerDownload(outBlob, "Unbotify_Processed_" + file.name);
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Unbotify_Processed_" + file.name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
         statusDiv.innerHTML = '<span style="color:var(--success); font-weight:700;">✓ Document processed and downloaded successfully!</span>';
       } catch (err) {
         statusDiv.innerHTML = '<span style="color:var(--danger);">Error processing document: ' + err.message + '</span>';
       }
-    }
-
-    function triggerDownload(blob, filename) {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => window.URL.revokeObjectURL(url), 15000);
     }
 
     async function runCodeHumanize() {
@@ -932,57 +703,53 @@ def py_code(code, lang, persona):
       const lang = document.getElementById("codeLang").value;
       const persona = document.getElementById("codePersona").value;
 
-      if (pyodideReady && pyodide) {
-        try {
-          const raw = pyodide.globals.get('py_code')(code, lang, persona);
-          const data = JSON.parse(raw);
-          document.getElementById("codeOut").value = data.processed_code;
-          return;
-        } catch (e) {}
+      try {
+        const res = await fetch("/v1/code-comment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code, lang, persona })
+        });
+        const data = await res.json();
+        document.getElementById("codeOut").value = data.processed_code;
+      } catch (err) {
+        alert("Error: " + err.message);
       }
-
-      // Fallback
-      const modified = code.replace(/#\s*(Initialize|Compute|Return|Process)\b/g, "# setup");
-      document.getElementById("codeOut").value = modified;
     }
 
     async function runCitations() {
       const text = document.getElementById("citeIn").value;
-      if (pyodideReady && pyodide) {
-        try {
-          const raw = pyodide.globals.get('py_cite')(text, 2);
-          const data = JSON.parse(raw);
-          document.getElementById("citeOut").value = data.bib_text;
-          return;
-        } catch (e) {}
+      try {
+        const res = await fetch("/v1/citations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text, citation_count: 2 })
+        });
+        const data = await res.json();
+        document.getElementById("citeOut").value = data.bib_text;
+      } catch (err) {
+        alert("Error: " + err.message);
       }
-      document.getElementById("citeOut").value = "[1] J. Smith et al., 'Neural Representation Systems,' IEEE Trans. Comput., vol. 72, no. 4, pp. 1120-1132, 2024.\n[2] A. Vaswani and M. Chen, 'Deterministic Entropy Scaffolding,' ACM Comput. Surv., vol. 55, no. 2, pp. 45-60, 2023.";
     }
 
     async function runDetector() {
       const text = document.getElementById("detectIn").value;
-      if (!text.trim()) return alert("Please enter text to audit.");
-      let score = 0.0;
-      let entropy = 1.4205;
-      let classification = "Safe (100% Human-Authored • AI Neutralized)";
-
-      if (pyodideReady && pyodide) {
-        try {
-          const raw = pyodide.globals.get('py_detect')(text);
-          const data = JSON.parse(raw);
-          score = data.risk_score;
-          entropy = data.entropy_score;
-          classification = data.classification;
-        } catch (e) {}
+      try {
+        const res = await fetch("/v1/detect-ai", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text })
+        });
+        const data = await res.json();
+        document.getElementById("detectResult").innerHTML = `
+          <div style="background:rgba(10,14,26,0.8); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:16px;">
+            <div style="font-size:1.8rem; font-weight:800; color:${data.risk_score === 0 ? 'var(--success)' : 'var(--warning)'};">${data.risk_score}% AI</div>
+            <div style="font-weight:700; margin-top:4px;">${data.classification}</div>
+            <div style="font-size:0.85rem; color:#94A3B8; margin-top:8px;">Normalized Compression Entropy: ${data.entropy_score}</div>
+          </div>
+        `;
+      } catch (err) {
+        alert("Error: " + err.message);
       }
-
-      document.getElementById("detectResult").innerHTML = `
-        <div style="background:rgba(10,14,26,0.8); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:16px;">
-          <div style="font-size:1.8rem; font-weight:800; color:${score === 0 ? 'var(--success)' : 'var(--warning)'};">${score.toFixed(1)}% AI</div>
-          <div style="font-weight:700; margin-top:4px;">${classification}</div>
-          <div style="font-size:0.85rem; color:#94A3B8; margin-top:8px;">Normalized Compression Entropy: ${typeof entropy === 'number' ? entropy.toFixed(4) : entropy}</div>
-        </div>
-      `;
     }
 
     function copyOutput() {
@@ -995,8 +762,14 @@ def py_code(code, lang, persona):
     function downloadOutput() {
       const val = document.getElementById("outputText").value;
       if (!val) return;
-      const blob = new Blob([val], { type: "text/plain;charset=utf-8" });
-      triggerDownload(blob, "Unbotify_Humanized.txt");
+      const blob = new Blob([val], { type: "text/plain" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Unbotify_Humanized.txt";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
     }
   </script>
 </body>
