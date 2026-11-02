@@ -1,7 +1,7 @@
 """
 Unbotify Enterprise REST API Implementation (FastAPI).
 Tagline: "Less formula. More expression."
-High-Throughput Programmatic AI Footprint Erasure & Academic Citation Engine.
+High-Throughput Programmatic AI Footprint Erasure, Document Processing & Academic Citation Engine.
 """
 
 import time
@@ -9,7 +9,7 @@ import os
 import sys
 from typing import List, Optional
 from pydantic import BaseModel, Field
-from fastapi import FastAPI, Header, HTTPException, status
+from fastapi import FastAPI, Header, HTTPException, status, UploadFile, File, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 # Ensure src is on python path
@@ -19,6 +19,8 @@ from unbotify.config import UnbotifyConfig
 from unbotify.core.modifier import TextModifier
 from unbotify.core.citation_engine import CitationEngine
 from unbotify.core.ai_detector import ZipPyDetector
+from unbotify.core.doc_processor import DocumentProcessor
+from unbotify.core.parsers.code_parser import CodeCommentParser
 
 app = FastAPI(
     title="Unbotify Enterprise REST API",
@@ -182,6 +184,41 @@ def humanize_endpoint(req: HumanizeRequest, x_api_key: Optional[str] = Header(No
         telemetry=telemetry
     )
 
+@app.post("/v1/process-file")
+async def process_file_endpoint(
+    file: UploadFile = File(...),
+    intensity: float = Form(75.0),
+    style: str = Form("academic"),
+    zero_expansion: bool = Form(False)
+):
+    """Processes Word (.docx), LaTeX (.tex), Markdown (.md), and Code files."""
+    contents = await file.read()
+    cfg = UnbotifyConfig(INTENSITY=intensity, STYLE=style, ZERO_EXPANSION=zero_expansion)
+    processor = DocumentProcessor(cfg)
+
+    filename = file.filename or "document.txt"
+    lower = filename.lower()
+
+    if lower.endswith(".zip"):
+        out_bytes, out_name = processor.process_zip_package(contents)
+        mime = "application/zip"
+    else:
+        out_bytes, mime = processor.process_file_bytes(filename, contents)
+        base, ext = os.path.splitext(filename)
+        out_name = f"Unbotify_Processed_{base}{ext}"
+
+    return Response(
+        content=out_bytes,
+        media_type=mime,
+        headers={"Content-Disposition": f'attachment; filename="{out_name}"'}
+    )
+
+@app.post("/v1/detect-ai")
+def detect_ai_endpoint(payload: dict):
+    """Runs ZipPy compression entropy and AI marker analysis."""
+    text = payload.get("text", "")
+    return ZipPyDetector.analyze(text)
+
 @app.post("/v1/citations", response_model=CitationResponse)
 def citations_endpoint(req: CitationRequest, x_api_key: Optional[str] = Header(None)):
     start = time.time()
@@ -202,6 +239,21 @@ def citations_endpoint(req: CitationRequest, x_api_key: Optional[str] = Header(N
         words_processed=len(req.text.split()),
         latency_ms=round(latency, 2)
     )
+
+@app.post("/v1/code-comment")
+def code_comment_endpoint(payload: dict):
+    code = payload.get("code", "")
+    lang = payload.get("lang", "python")
+    persona = payload.get("persona", "intermediate")
+    convert_docstrings = payload.get("convert_docstrings", False)
+    intensity = float(payload.get("intensity", 75.0))
+
+    cfg = UnbotifyConfig(INTENSITY=intensity, DEVELOPER_PERSONA=persona, CONVERT_DOCSTRINGS=convert_docstrings)
+    modifier = TextModifier(cfg)
+    processed = CodeCommentParser.process_code(
+        code=code, lang=lang, persona=persona, convert_docstrings=convert_docstrings, transform_fn=modifier.modify_text
+    )
+    return {"success": True, "processed_code": processed, "lang": lang}
 
 if __name__ == "__main__":
     import uvicorn
