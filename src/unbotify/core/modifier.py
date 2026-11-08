@@ -150,21 +150,26 @@ class TextModifier:
             return text
 
         agg = self.config.get_internal_aggressiveness()
-        for compiled_pattern, replacement in self.rules.phrases:
-            if compiled_pattern.search(text):
-                # 100% deterministic replacement when scrubber is enabled
-                if self.config.ENABLE_AI_TELL_SCRUBBER or self.rng.random() <= min(0.98, agg * 1.15):
-                    def repl_fn(m):
-                        matched = m.group(0)
-                        self.phrase_rewrite_count += 1
-                        if matched[0].isupper() and replacement and replacement[0].islower():
-                            return replacement[0].upper() + replacement[1:]
-                        return replacement
+        # Run up to 2 passes so nested or cascaded clichés are completely resolved
+        for _ in range(2):
+            changed = False
+            for compiled_pattern, replacement in self.rules.phrases:
+                if compiled_pattern.search(text):
+                    if self.config.ENABLE_AI_TELL_SCRUBBER or self.rng.random() <= min(0.98, agg * 1.15):
+                        def repl_fn(m):
+                            matched = m.group(0)
+                            self.phrase_rewrite_count += 1
+                            if matched[0].isupper() and replacement and replacement[0].islower():
+                                return replacement[0].upper() + replacement[1:]
+                            return replacement
 
-                    new_text = compiled_pattern.sub(repl_fn, text)
-                    if new_text != text:
-                        self.changes_log.append({"stage": "phrase_rewrite", "from": text[:60], "to": new_text[:60]})
-                        text = new_text
+                        new_text = compiled_pattern.sub(repl_fn, text)
+                        if new_text != text:
+                            self.changes_log.append({"stage": "phrase_rewrite", "from": text[:60], "to": new_text[:60]})
+                            text = new_text
+                            changed = True
+            if not changed:
+                break
 
         return text
 

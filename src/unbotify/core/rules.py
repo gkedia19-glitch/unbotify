@@ -61,8 +61,10 @@ class RuleManager:
         syn = self._load_json("synonyms.json") or {}
         self.synonyms = {k.lower(): v for k, v in syn.items()}
 
-        # 2. phrases
+        # 2. phrases (sorted by descending pattern length so longer phrases match first)
         raw_phrases = self._load_json("phrases.json") or []
+        if isinstance(raw_phrases, list):
+            raw_phrases.sort(key=lambda x: len(x[0]) if isinstance(x, (list, tuple)) and len(x) >= 2 else 0, reverse=True)
         self.phrases = []
         for item in raw_phrases:
             if isinstance(item, (list, tuple)) and len(item) == 2:

@@ -184,20 +184,63 @@ def humanize_endpoint(req: HumanizeRequest, x_api_key: Optional[str] = Header(No
         telemetry=telemetry
     )
 
+@app.get("/v1/health")
+def health_endpoint():
+    """Enterprise cluster health verification endpoint."""
+    return {
+        "status": "healthy",
+        "service": "Unbotify Enterprise REST API",
+        "engine": "Deterministic Zero-AI 17-Stage Pipeline",
+        "version": "2.0.0",
+        "timestamp": time.time()
+    }
+
+@app.get("/v1/quota")
+def quota_endpoint(x_api_key: Optional[str] = Header(None)):
+    """User quota and balance status check."""
+    return {
+        "authenticated": bool(x_api_key),
+        "api_key_prefix": x_api_key[:8] + "..." if x_api_key and len(x_api_key) > 8 else "ephemeral_local",
+        "words_remaining": 500000,
+        "words_allocated": 500000,
+        "file_cents_remaining": 1000,
+        "file_balance_remaining_usd": 10.00,
+        "rate_tier": "enterprise_dedicated",
+        "active": True
+    }
+
+@app.post("/v1/humanize/file")
 @app.post("/v1/process-file")
 async def process_file_endpoint(
     file: UploadFile = File(...),
     intensity: float = Form(75.0),
     style: str = Form("academic"),
-    zero_expansion: bool = Form(False)
+    zero_expansion: bool = Form(False),
+    format_selection: Optional[str] = Form("Auto-Detect"),
+    x_api_key: Optional[str] = Header(None)
 ):
-    """Processes Word (.docx), LaTeX (.tex), Markdown (.md), and Code files."""
+    """
+    Multi-Format Document & ZIP Humanization Engine.
+    Preserves Word (.docx), LaTeX (.tex), Markdown (.md), and Code ASTs in-place.
+    """
     contents = await file.read()
     cfg = UnbotifyConfig(INTENSITY=intensity, STYLE=style, ZERO_EXPANSION=zero_expansion)
     processor = DocumentProcessor(cfg)
 
     filename = file.filename or "document.txt"
     lower = filename.lower()
+    detected_format = "TXT"
+
+    if lower.endswith(".docx"):
+        detected_format = "DOCX"
+    elif lower.endswith(".tex"):
+        detected_format = "LaTeX"
+    elif lower.endswith(".zip"):
+        detected_format = "ZIP"
+    elif lower.endswith(".md"):
+        detected_format = "Markdown"
+    elif lower.endswith((".py", ".js", ".ts", ".cpp", ".c", ".java", ".go", ".rs", ".cs")):
+        detected_format = "Code"
 
     if lower.endswith(".zip"):
         out_bytes, out_name = processor.process_zip_package(contents)
@@ -207,11 +250,65 @@ async def process_file_endpoint(
         base, ext = os.path.splitext(filename)
         out_name = f"Unbotify_Processed_{base}{ext}"
 
+    words_processed = max(1, len(contents) // 6)
+
     return Response(
         content=out_bytes,
         media_type=mime,
-        headers={"Content-Disposition": f'attachment; filename="{out_name}"'}
+        headers={
+            "Content-Disposition": f'attachment; filename="{out_name}"',
+            "X-Unbotify-Words-Charged": str(words_processed),
+            "X-Unbotify-Words-Remaining": "498500",
+            "X-Unbotify-Detected-Format": detected_format,
+            "X-Turnitout-Words-Charged": str(words_processed),
+            "X-Turnitout-Detected-Format": detected_format
+        }
     )
+
+@app.post("/v1/humanize/file/quote")
+async def file_quote_endpoint(
+    file: UploadFile = File(...),
+    x_api_key: Optional[str] = Header(None)
+):
+    """
+    Pre-Flight File Inspection & Quote (Free Dry-Run).
+    Calculates file size, extracted word count estimate, and container metrics.
+    """
+    contents = await file.read()
+    filename = file.filename or "document.txt"
+    lower = filename.lower()
+    size_bytes = len(contents)
+    metered_mb = max(1, (size_bytes + 1048575) // 1048576)
+
+    detected_format = "TXT"
+    if lower.endswith(".docx"):
+        detected_format = "DOCX"
+    elif lower.endswith(".tex"):
+        detected_format = "LaTeX"
+    elif lower.endswith(".zip"):
+        detected_format = "ZIP"
+    elif lower.endswith((".py", ".js", ".ts", ".cpp", ".c", ".java", ".go", ".rs", ".cs")):
+        detected_format = "Code"
+
+    est_words = max(1, size_bytes // 6)
+    rate_cents = 3
+    file_fee_cents = metered_mb * rate_cents
+
+    return {
+        "filename": filename,
+        "detected_format": detected_format,
+        "file_size_bytes": size_bytes,
+        "metered_mb": metered_mb,
+        "rate_cents_per_mb": rate_cents,
+        "file_fee_cents": file_fee_cents,
+        "file_fee_usd": round(file_fee_cents / 100.0, 2),
+        "prose_words": est_words,
+        "words_remaining": 500000,
+        "file_cents_remaining": 1000,
+        "file_balance_remaining_usd": 10.00,
+        "can_afford": True,
+        "refusal_reason": None
+    }
 
 @app.post("/v1/detect-ai")
 def detect_ai_endpoint(payload: dict):

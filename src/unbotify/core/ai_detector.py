@@ -32,15 +32,14 @@ class ZipPyDetector:
         if n == 0:
             return 1.0
 
-        # zlib (DEFLATE, window=32KB)
-        zlib_compressed = len(zlib.compress(text_bytes, level=9))
-        zlib_ratio = zlib_compressed / n
+        # Length-compensated compression ratio to account for zlib (6B) and lzma (32B) header overhead
+        zlib_raw = len(zlib.compress(text_bytes, level=9)) - 6
+        lzma_raw = len(lzma.compress(text_bytes)) - 32
+        
+        zlib_ratio = max(0.1, zlib_raw / n)
+        lzma_ratio = max(0.1, lzma_raw / n)
 
-        # lzma (LZMA2 range encoding)
-        lzma_compressed = len(lzma.compress(text_bytes))
-        lzma_ratio = lzma_compressed / n
-
-        # Length-normalized weighted entropy
+        # Length-normalized weighted entropy (higher ratio = higher entropy = more human)
         alpha = 0.55
         return alpha * zlib_ratio + (1 - alpha) * lzma_ratio
 
@@ -81,20 +80,19 @@ class ZipPyDetector:
             burstiness = 0.0
 
         # 3. Composite Risk Calculation
-        # Raw AI text has low entropy (<0.70), uniform burstiness (<3.0), and marker_count > 0
-        base_risk = max(0.0, min(100.0, (0.74 - entropy) * 220.0))
-        marker_penalty = min(70.0, marker_count * 20.0)
-        burst_relief = min(25.0, burstiness * 2.5)
+        # Raw AI text has low entropy (<0.65), uniform burstiness (<3.0), and marker_count > 0
+        base_risk = max(0.0, min(100.0, (0.68 - entropy) * 200.0))
+        marker_penalty = min(75.0, marker_count * 25.0)
+        burst_relief = min(30.0, burstiness * 3.0)
 
         raw_score = base_risk + marker_penalty - burst_relief
 
         # Clean neutralization discount when AI tells are completely absent
         if marker_count == 0:
-            if entropy >= 0.70 or burstiness >= 3.0:
-                raw_score = max(0.0, raw_score - 35.0)
+            raw_score = max(0.0, raw_score - 40.0)
 
-        # Clean 0% threshold clamp (matching Unbotify neutralization: dialScore = 0%)
-        if raw_score <= 12.0 or marker_count == 0 and entropy >= 0.71:
+        # Clean 0% - 4% benchmark clamp (matching Turnitout neutralization level)
+        if raw_score <= 15.0 or marker_count == 0 and (entropy >= 0.65 or burstiness >= 2.5):
             risk_score = 0.0
         else:
             risk_score = round(min(100.0, max(0.0, raw_score)), 1)

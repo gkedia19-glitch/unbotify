@@ -615,7 +615,6 @@
     "intricate",
     "convoluted",
     "elaborate",
-    "multifaceted",
     "non-trivial",
     "involved"
   ],
@@ -1724,15 +1723,13 @@
     "scrutinize",
     "probe",
     "investigate",
-    "survey",
-    "delve into"
+    "survey"
   ],
   "explores": [
     "scrutinizes",
     "probes",
     "investigates",
-    "surveys",
-    "delves into"
+    "surveys"
   ],
   "explored": [
     "scrutinized",
@@ -1745,8 +1742,7 @@
     "scrutinizing",
     "probing",
     "investigating",
-    "surveying",
-    "delving into"
+    "surveying"
   ],
   "frameworks": [
     "architectures",
